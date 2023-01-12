@@ -12,7 +12,7 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
 });
 
-app.listen(3000, function () {
+app.listen(8000, function () {
   console.log(`starting app on: ${address}`);
 });
 

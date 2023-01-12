@@ -46,7 +46,9 @@ Postgres password at `POSTGRES_PASSWORD=`
 `SALT_ROUNDS=`
 `PEPPER=`
 `TOKEN_SECRET=`
-
+#### ports
+the database is running on port 5432
+the backend is running on port 8000
 ## Running Tests
 
 To run tests, run the following command
