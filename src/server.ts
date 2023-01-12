@@ -2,7 +2,7 @@ import express, { Request, Response } from "express";
 import bodyParser from "body-parser";
 import productsRoute from "./handlers/products";
 import usersRoute from "./handlers/users";
-
+import ordersRoute from "./handlers/orders";
 const app: express.Application = express();
 const address: string = "0.0.0.0:3000";
 
@@ -18,3 +18,4 @@ app.listen(3000, function () {
 
 app.use(productsRoute);
 app.use(usersRoute);
+app.use(ordersRoute);

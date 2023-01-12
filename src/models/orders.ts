@@ -1,12 +1,12 @@
 import Client from "../database";
 
 export type orders = {
-  order_id: Number;
+  order_id?: Number;
   user_id: Number;
-  status: Boolean;
+  status?: Boolean;
 };
 export type orderProducts = {
-  orderProducts_id: Number;
+  orderProducts_id?: Number;
   quantity: Number;
   productId: Number;
   orderId: Number;
@@ -16,9 +16,8 @@ export class dbUserOrderProducts {
   async create(o: orders): Promise<orders> {
     try {
       const conn = await Client.connect();
-      const sql =
-        "INSERT INTO orders(user_id,status) Values($1,$2) RETURNING *";
-      const result = await conn.query(sql, [o.user_id, o.status]);
+      const sql = "INSERT INTO orders(user_id) Values($1) RETURNING *";
+      const result = await conn.query(sql, [o.user_id]);
       const order = result.rows[0];
       conn.release();
       return order;
@@ -43,7 +42,6 @@ export class dbUserOrderProducts {
       throw new Error(`products cannot be added ${err}`);
     }
   }
-
   async show(id: string): Promise<orders> {
     try {
       const sql = "SELECT * FROM orders WHERE user_id=($1)";
