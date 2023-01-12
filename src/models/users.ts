@@ -5,7 +5,7 @@ const saltRounds = SALT_ROUNDS as string;
 const pepper = "dkfsd$sdjd$kfe%";
 
 export type Users = {
-  user_id: Number;
+  user_id?: Number;
   username: String;
   firstname: String;
   lastname: String;
@@ -13,12 +13,8 @@ export type Users = {
 };
 
 export class dbUsers {
-  static create(user: Users) {
-    throw new Error("Method not implemented.");
-  }
   async create(u: Users): Promise<Users> {
     try {
-      // @ts-ignore
       const conn = await Client.connect();
       const sql =
         "INSERT INTO users (username,firstname,lastname,password_digest) VALUES($1,$2,$3,$4) RETURNING *";
@@ -26,7 +22,6 @@ export class dbUsers {
         u.password_digest + pepper,
         parseInt(saltRounds)
       );
-
       const result = await conn.query(sql, [
         u.username,
         u.firstname,
@@ -69,7 +64,6 @@ export class dbUsers {
 
   async index(): Promise<Users[]> {
     try {
-      // @ts-ignore
       const conn = await Client.connect();
       const sql = "SELECT * FROM users";
 
@@ -86,7 +80,6 @@ export class dbUsers {
   async show(id: string): Promise<Users> {
     try {
       const sql = "SELECT * FROM products WHERE user_id=($1)";
-      // @ts-ignore
       const conn = await Client.connect();
 
       const result = await conn.query(sql, [id]);

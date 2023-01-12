@@ -12,7 +12,7 @@ export type orderProducts = {
   orderId: Number;
 };
 
-export class userOrderProducts {
+export class dbUserOrderProducts {
   async create(o: orders): Promise<orders> {
     try {
       const conn = await Client.connect();
