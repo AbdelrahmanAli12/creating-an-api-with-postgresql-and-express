@@ -46,8 +46,8 @@ const addProductsToOrder = async (req: Request, res: Response) => {
   }
 };
 
-ordersRoute.get("/order/:id", getUserOrder);
-ordersRoute.post("/order/createOrder", createOrder);
-ordersRoute.post("/order/addProductsToOrder", addProductsToOrder);
+ordersRoute.get("/:id", getUserOrder);
+ordersRoute.post("/createOrder", createOrder);
+ordersRoute.post("/addProductsToOrder", addProductsToOrder);
 
 export default ordersRoute;

@@ -61,12 +61,12 @@ To run tests, run the following command
 #### Get all the products
 
 ```http
-  GET /p/products
+  GET /products
 ```
 #### Get products by Id
 
 ```http
-  GET /p/products/${id}
+  GET /products/${id}
 ```
 
 | Parameter | Type     | Description                       |
@@ -76,7 +76,7 @@ To run tests, run the following command
 #### To create a product
 
 ```http
-  POST /P/products/create
+  POST /products/create
 ```
 
 | body      | Type     | Description                       |
@@ -87,12 +87,12 @@ To run tests, run the following command
 #### Get all the users
 
 ```http
-  GET /u/users
+  GET /users
 ```
 #### Get users by Id
 
 ```http
-  GET /u/users/${id}
+  GET /users/${id}
 ```
 
 | Parameter | Type     | Description                       |
@@ -102,7 +102,7 @@ To run tests, run the following command
 #### To create a user
 
 ```http
-  POST /u/users/create
+  POST /users/create
 ```
 
 | body      | Type     | Description                       |
@@ -115,7 +115,7 @@ To run tests, run the following command
 #### To authenticate a user
 
 ```http
-  POST /u/users/authenticate
+  POST /users/authenticate
 ```
 
 | body      | Type     | Description                       |
@@ -129,7 +129,7 @@ To run tests, run the following command
 #### Get products by Id
 
 ```http
-  GET /o/order/${id}
+  GET /orders/${id}
 ```
 
 | Parameter | Type     | Description                       |
@@ -139,7 +139,7 @@ To run tests, run the following command
 #### To create an order
 
 ```http
-  POST /o/order/createOrder
+  POST /orders/createOrder
 ```
 
 | body      | Type     | Description                       |
@@ -149,7 +149,7 @@ To run tests, run the following command
 #### To add products to order
 
 ```http
-  POST /o/order/addProductsToOrder
+  POST /orders/addProductsToOrder
 ```
 
 | body      | Type     | Description                       |

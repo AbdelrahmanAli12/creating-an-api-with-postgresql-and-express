@@ -33,7 +33,9 @@ These are the notes from a meeting with the frontend developer that describe wha
 #### Orders
 - id
 - user_id
-- status of order (active or complete)
+- status of order (false or true) 
+true = completed
+false = active
 
 ### OrderProducts 
 -id

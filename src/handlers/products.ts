@@ -40,8 +40,8 @@ const createProduct = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-productsRoute.get("/products", getProduct);
-productsRoute.get("/products/:id", getProductById);
-productsRoute.post("products/create", createProduct);
+productsRoute.get("/", getProduct);
+productsRoute.get("/:id", getProductById);
+productsRoute.post("/create", createProduct);
 
 export default productsRoute;

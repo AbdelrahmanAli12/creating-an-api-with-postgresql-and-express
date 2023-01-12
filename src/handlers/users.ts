@@ -52,9 +52,9 @@ const getUsersById = async (req: Request, res: Response) => {
   DBusers.show(id);
 };
 
-usersRoute.get("/users", getUsers);
-usersRoute.get("/users/:id", getUsersById);
-usersRoute.post("/users/create", createUser);
-usersRoute.post("/users/authenticate", authenticateUser);
+usersRoute.get("/", getUsers);
+usersRoute.get("/:id", getUsersById);
+usersRoute.post("/create", createUser);
+usersRoute.post("/authenticate", authenticateUser);
 
 export default usersRoute;
