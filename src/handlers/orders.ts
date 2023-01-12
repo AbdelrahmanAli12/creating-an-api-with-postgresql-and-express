@@ -9,8 +9,13 @@ const { TOKEN_SECRET } = process.env;
 const tokenSecret = TOKEN_SECRET as Secret;
 
 const getUserOrder = async (req: Request, res: Response) => {
-  const userId = req.params.id;
-  await DBuserOrderProducts.show(userId);
+  try {
+    const userId = req.params.id;
+    const result = await DBuserOrderProducts.show(userId);
+    res.json(result);
+  } catch (err) {
+    res.json(err);
+  }
 };
 
 const createOrder = async (req: Request, res: Response) => {
@@ -27,7 +32,8 @@ const createOrder = async (req: Request, res: Response) => {
     const order: orders = {
       user_id: req.body.user_id,
     };
-    await DBuserOrderProducts.create(order);
+    const result = await DBuserOrderProducts.create(order);
+    res.json(result);
   } catch (err) {
     res.json("cannot create order");
   }
@@ -40,7 +46,8 @@ const addProductsToOrder = async (req: Request, res: Response) => {
     orderId: req.body.orderId,
   };
   try {
-    await DBuserOrderProducts.addProductsToOrder(product);
+    const result = await DBuserOrderProducts.addProductsToOrder(product);
+    res.json(result);
   } catch (err) {
     res.json("cannot add products to order");
   }

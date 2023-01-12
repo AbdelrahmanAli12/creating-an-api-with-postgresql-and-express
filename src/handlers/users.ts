@@ -44,12 +44,22 @@ const authenticateUser = async (req: Request, res: Response) => {
 };
 
 const getUsers = async (req: Request, res: Response) => {
-  await DBusers.index();
+  try {
+    const result = await DBusers.index();
+    res.json(result);
+  } catch (err) {
+    res.json(err);
+  }
 };
 
 const getUsersById = async (req: Request, res: Response) => {
-  const id = req.params.id;
-  DBusers.show(id);
+  try {
+    const id = req.params.id;
+    const result = DBusers.show(id);
+    res.json(result);
+  } catch (err) {
+    res.json(err);
+  }
 };
 
 usersRoute.get("/", getUsers);
