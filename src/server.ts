@@ -3,8 +3,9 @@ import bodyParser from "body-parser";
 import productsRoute from "./handlers/products";
 import usersRoute from "./handlers/users";
 import ordersRoute from "./handlers/orders";
+
 const app: express.Application = express();
-const address: string = "0.0.0.0:3000";
+const address: string = "8000";
 
 app.use(bodyParser.json());
 

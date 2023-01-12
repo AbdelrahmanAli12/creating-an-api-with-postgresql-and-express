@@ -6,15 +6,26 @@ const DBProducts = new dbProducts();
 const productsRoute = Router();
 const { TOKEN_SECRET } = process.env;
 const tokenSecret = TOKEN_SECRET as Secret;
+
 //get all products
 const getProduct = async (req: Request, res: Response): Promise<void> => {
-  DBProducts.index();
+  try {
+    const result = DBProducts.index();
+    res.json(result);
+  } catch (err) {
+    res.json(err);
+  }
 };
 
 //get products by id
 const getProductById = async (req: Request, res: Response): Promise<void> => {
-  const id = req.params.id;
-  DBProducts.show(id);
+  try {
+    const id = req.params.id;
+    const result = DBProducts.show(id);
+    res.json(result);
+  } catch (err) {
+    res.json(err);
+  }
 };
 
 //create product
@@ -33,7 +44,8 @@ const createProduct = async (req: Request, res: Response): Promise<void> => {
       name: req.body.name as String,
       price: req.body.price as Number,
     };
-    DBProducts.create(Products);
+    const result = DBProducts.create(Products);
+    res.json(result);
   } catch (err) {
     res.json("error creating product");
     return;

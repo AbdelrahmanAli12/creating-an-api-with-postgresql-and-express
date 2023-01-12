@@ -3,7 +3,7 @@
     "driver": "pg",
     "host": "127.0.0.1",
     "database": "postgres",
-    "user": "postgres",
+    "user": "Bido_",
     "password": "password123"
   },
   "test": {
