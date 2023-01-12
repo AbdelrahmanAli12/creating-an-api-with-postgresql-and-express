@@ -1,54 +1,164 @@
-# Storefront Backend Project
 
-## Getting Started
+# Build a Storefront Backend
 
-This repo contains a basic Node and Express app to get you started in constructing an API. To get started, clone this repo and run `yarn` in your terminal at the project root.
+This project is about building a Storefront backend using express and postgres using validation and authentication 
 
-## Required Technologies
-Your application must make use of the following libraries:
-- Postgres for the database
-- Node/Express for the application logic
-- dotenv from npm for managing environment variables
-- db-migrate from npm for migrations
-- jsonwebtoken from npm for working with JWTs
-- jasmine from npm for testing
 
-## Steps to Completion
+## Badges
 
-### 1. Plan to Meet Requirements
+![typescript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 
-In this repo there is a `REQUIREMENTS.md` document which outlines what this API needs to supply for the frontend, as well as the agreed upon data shapes to be passed between front and backend. This is much like a document you might come across in real life when building or extending an API. 
+![node](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
 
-Your first task is to read the requirements and update the document with the following:
-- Determine the RESTful route for each endpoint listed. Add the RESTful route and HTTP verb to the document so that the frontend developer can begin to build their fetch requests.    
-**Example**: A SHOW route: 'blogs/:id' [GET] 
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+## Run Locally
 
-- Design the Postgres database tables based off the data shape requirements. Add to the requirements document the database tables and columns being sure to mark foreign keys.   
-**Example**: You can format this however you like but these types of information should be provided
-Table: Books (id:varchar, title:varchar, author:varchar, published_year:varchar, publisher_id:string[foreign key to publishers table], pages:number)
 
-**NOTE** It is important to remember that there might not be a one to one ratio between data shapes and database tables. Data shapes only outline the structure of objects being passed between frontend and API, the database may need multiple tables to store a single shape. 
+Go to the project directory
 
-### 2.  DB Creation and Migrations
+```bash
+  cd src
+```
 
-Now that you have the structure of the databse outlined, it is time to create the database and migrations. Add the npm packages dotenv and db-migrate that we used in the course and setup your Postgres database. If you get stuck, you can always revisit the database lesson for a reminder. 
+Install dependencies
 
-You must also ensure that any sensitive information is hashed with bcrypt. If any passwords are found in plain text in your application it will not pass.
+```bash
+  npm install
+```
 
-### 3. Models
+Start the server
 
-Create the models for each database table. The methods in each model should map to the endpoints in `REQUIREMENTS.md`. Remember that these models should all have test suites and mocks.
+```bash
+  npm run start
+```
 
-### 4. Express Handlers
 
-Set up the Express handlers to route incoming requests to the correct model method. Make sure that the endpoints you create match up with the enpoints listed in `REQUIREMENTS.md`. Endpoints must have tests and be CORS enabled. 
+## Environment Variables
 
-### 5. JWTs
+To run this project, you will need to add the following environment variables to your .env file
 
-Add JWT functionality as shown in the course. Make sure that JWTs are required for the routes listed in `REQUIUREMENTS.md`.
+The localhost you are running on `POSTGRES_HOST=`
+The name of the DataBase at `POSTGRES_DB=`
+Postgres username at `POSTGRES_USER=`
+Postgres password at `POSTGRES_PASSWORD=`
+#### JWT attributes:
+`BCRYPT_PASSWORD=`
+`SALT_ROUNDS=`
+`PEPPER=`
+`TOKEN_SECRET=`
 
-### 6. QA and `README.md`
+## Running Tests
 
-Before submitting, make sure that your project is complete with a `README.md`. Your `README.md` must include instructions for setting up and running your project including how you setup, run, and connect to your database. 
+To run tests, run the following command
 
-Before submitting your project, spin it up and test each endpoint. If each one responds with data that matches the data shapes from the `REQUIREMENTS.md`, it is ready for submission!
+```bash
+  npm run test
+```
+
+
+## API Reference
+
+#### Get all the products
+
+```http
+  GET /p/products
+```
+#### Get products by Id
+
+```http
+  GET /p/products/${id}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `number` | **Required**. Id of the product   |
+
+#### To create a product
+
+```http
+  POST /P/products/create
+```
+
+| body      | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `name`      | `string` | **Required**. name of the product   |
+| `price`      | `string` | **Required**. price of the product   |
+
+#### Get all the users
+
+```http
+  GET /u/users
+```
+#### Get users by Id
+
+```http
+  GET /u/users/${id}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `number` | **Required**. Id of the user   |
+
+#### To create a user
+
+```http
+  POST /u/users/create
+```
+
+| body      | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `username`      | `string` | **Required**. name of the user   |
+| `firstname`      | `string` | **Required**. firstname of the user   |
+| `lastname`      | `string` | **Required**. lastname of the user   |
+| `password_digest` | `string` | **Required**. password for the user   |
+
+#### To authenticate a user
+
+```http
+  POST /u/users/authenticate
+```
+
+| body      | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `username`      | `string` | **Required**. name of the user   |
+| `firstname`      | `string` | **Required**. firstname of the user   |
+| `lastname`      | `string` | **Required**. lastname of the user   |
+| `password_digest` | `string` | **Required**. password for the user   |
+
+
+#### Get products by Id
+
+```http
+  GET /o/order/${id}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `number` | **Required**. Id of the order   |
+
+#### To create an order
+
+```http
+  POST /o/order/createOrder
+```
+
+| body      | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `user_id`      | `string` | **Required**. the user id   |
+
+#### To add products to order
+
+```http
+  POST /o/order/addProductsToOrder
+```
+
+| body      | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `quantity`      | `number` | **Required**. number needed from this product   |
+| `productId`      | `string` | **Required**. the product id   |
+| `orderId`      | `string` | **Required**. the order id   |
+
+
+
+
+

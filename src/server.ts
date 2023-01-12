@@ -16,6 +16,6 @@ app.listen(3000, function () {
   console.log(`starting app on: ${address}`);
 });
 
-app.use(productsRoute);
-app.use(usersRoute);
-app.use(ordersRoute);
+app.use("/p", productsRoute);
+app.use("/u", usersRoute);
+app.use("/o", ordersRoute);
