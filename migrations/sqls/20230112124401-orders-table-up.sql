@@ -1,6 +1,5 @@
-CREATE TABLE orders(order_id SERIAL PRIMARY KEY, 
-productId SERIAL REFERENCES products(product_id),
-quantity INTEGER,
+CREATE TABLE orders(
+order_id SERIAL PRIMARY KEY, 
 userId  SERIAL REFERENCES users(user_id),
-status BOOLEAN 
+status BOOLEAN DEFAULT false
 );

@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 const { SALT_ROUNDS } = process.env;
 const saltRounds = SALT_ROUNDS as string;
 const pepper = "dkfsd$sdjd$kfe%";
+
 export type Users = {
   user_id: Number;
   username: String;
@@ -94,7 +95,7 @@ export class dbUsers {
 
       return result.rows[0];
     } catch (err) {
-      throw new Error(`Could not find book ${id}. Error: ${err}`);
+      throw new Error(`Could not find user ${id}. Error: ${err}`);
     }
   }
 }
