@@ -7,28 +7,29 @@ const { TOKEN_SECRET } = process.env;
 const tokenSecret = TOKEN_SECRET as Secret;
 
 const createUser = async (req: Request, res: Response) => {
-  const user: Users = {
-    username: req.body.username,
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
-    password_digest: req.body.password_digest,
-  };
+  const username = req.body.username;
+  const firstname = req.body.firstname;
+  const lastname = req.body.lastname;
+  const password_digest = req.body.password_digest;
   try {
-    const newUser = await DBusers.create(user);
+    const newUser = await DBusers.create(
+      username,
+      firstname,
+      lastname,
+      password_digest
+    );
     var token = jwt.sign({ user: newUser }, tokenSecret);
     res.json(token);
   } catch (err: unknown) {
     res.status(400);
-    res.json(`${err} + ${user}`);
+    res.json(`${err} + ${username}`);
   }
 };
 
 const authenticateUser = async (req: Request, res: Response) => {
-  const user: Users = {
+  const user = {
     username: req.body.username,
     password_digest: req.body.password,
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
   };
   try {
     const u = await DBusers.authenticate(
@@ -45,6 +46,15 @@ const authenticateUser = async (req: Request, res: Response) => {
 
 const getUsers = async (req: Request, res: Response) => {
   try {
+    const authorizationHeader = req.headers.authorization as String;
+    const token = authorizationHeader.split(" ")[1];
+    jwt.verify(token, tokenSecret);
+  } catch (err) {
+    res.status(401);
+    res.json("Access denied, invalid token");
+    return;
+  }
+  try {
     const result = await DBusers.index();
     res.json(result);
   } catch (err) {
@@ -54,8 +64,17 @@ const getUsers = async (req: Request, res: Response) => {
 
 const getUsersById = async (req: Request, res: Response) => {
   try {
-    const id = req.params.id;
-    const result = DBusers.show(id);
+    const authorizationHeader = req.headers.authorization as String;
+    const token = authorizationHeader.split(" ")[1];
+    jwt.verify(token, tokenSecret);
+  } catch (err) {
+    res.status(401);
+    res.json("Access denied, invalid token");
+    return;
+  }
+  try {
+    const userId = req.params.userId;
+    const result = DBusers.show(userId);
     res.json(result);
   } catch (err) {
     res.json(err);
@@ -63,7 +82,7 @@ const getUsersById = async (req: Request, res: Response) => {
 };
 
 usersRoute.get("/", getUsers);
-usersRoute.get("/:id", getUsersById);
+usersRoute.get("/:userId", getUsersById);
 usersRoute.post("/create", createUser);
 usersRoute.post("/authenticate", authenticateUser);
 

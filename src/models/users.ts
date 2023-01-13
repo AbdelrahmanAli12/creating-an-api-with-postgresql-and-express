@@ -13,19 +13,21 @@ export type Users = {
 };
 
 export class dbUsers {
-  async create(u: Users): Promise<Users> {
+  async create(
+    username: String,
+    firstname: String,
+    lastname: String,
+    password: String
+  ): Promise<Users> {
     try {
       const conn = await Client.connect();
       const sql =
-        "INSERT INTO users (username,firstname,lastname,password_digest) VALUES($1,$2,$3,$4) RETURNING *";
-      const hash = bcrypt.hashSync(
-        u.password_digest + pepper,
-        parseInt(saltRounds)
-      );
+        "INSERT INTO users(username,firstname,lastname,password_digest) VALUES($1,$2,$3,$4) RETURNING *";
+      const hash = bcrypt.hashSync(password + pepper, parseInt(saltRounds));
       const result = await conn.query(sql, [
-        u.username,
-        u.firstname,
-        u.lastname,
+        username,
+        firstname,
+        lastname,
         hash,
       ]);
 
@@ -35,7 +37,7 @@ export class dbUsers {
 
       return user;
     } catch (err) {
-      throw new Error(`Could not add new product ${u.username}. Error: ${err}`);
+      throw new Error(`Could not add new user ${username}. Error: ${err}`);
     }
   }
   async authenticate(
@@ -79,7 +81,7 @@ export class dbUsers {
 
   async show(id: string): Promise<Users> {
     try {
-      const sql = "SELECT * FROM products WHERE user_id=($1)";
+      const sql = "SELECT * FROM users WHERE user_id=($1)";
       const conn = await Client.connect();
 
       const result = await conn.query(sql, [id]);

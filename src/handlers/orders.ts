@@ -10,6 +10,15 @@ const tokenSecret = TOKEN_SECRET as Secret;
 
 const getUserOrder = async (req: Request, res: Response) => {
   try {
+    const authorizationHeader = req.headers.authorization as String;
+    const token = authorizationHeader.split(" ")[1];
+    jwt.verify(token, tokenSecret);
+  } catch (err) {
+    res.status(401);
+    res.json("Access denied, invalid token");
+    return;
+  }
+  try {
     const userId = req.params.id;
     const result = await DBuserOrderProducts.show(userId);
     res.json(result);
@@ -40,12 +49,21 @@ const createOrder = async (req: Request, res: Response) => {
 };
 
 const addProductsToOrder = async (req: Request, res: Response) => {
-  const product: orderProducts = {
-    quantity: req.body.quantity,
-    productId: req.body.productId,
-    orderId: req.body.orderId,
-  };
   try {
+    const authorizationHeader = req.headers.authorization as String;
+    const token = authorizationHeader.split(" ")[1];
+    jwt.verify(token, tokenSecret);
+  } catch (err) {
+    res.status(401);
+    res.json("Access denied, invalid token");
+    return;
+  }
+  try {
+    const product: orderProducts = {
+      quantity: req.body.quantity,
+      productId: req.body.productId,
+      orderId: req.body.orderId,
+    };
     const result = await DBuserOrderProducts.addProductsToOrder(product);
     res.json(result);
   } catch (err) {

@@ -4,6 +4,7 @@
     "products_test.ts",
     "orders_test.ts",
     "users_test.ts"
+    
   ],
   "helpers": [
     "helpers/**/*.js"
@@ -16,6 +17,7 @@
       }
     }
   ],
+  
   "stopSpecOnExpectationFailure": false,
   "random": true
 }
