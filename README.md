@@ -49,6 +49,26 @@ Postgres password at `POSTGRES_PASSWORD=`
 #### ports
 the database is running on port 5432
 the backend is running on port 8000
+
+## Connecting to the database
+* first you need to start postgres
+* then as in the database.json file create two data bases in postgres with the names in the .json file 
+     Example:
+![database](img\database.PNG)
+* after that you need to grant all privileges on database (databaseName)
+to $user 
+Example:
+![grant](img\grant.PNG)
+```psql
+postgres=# CREATE DATABASE store;
+CREATE DATABASE
+postgres=# CREATE DATABASE store_test;
+CREATE DATABASE
+postgres=# GRANT ALL PRIVILEGES ON DATABASE store TO postgres;
+GRANT
+postgres=# GRANT ALL PRIVILEGES ON DATABASE store_test TO postgres;
+GRANT
+```
 ## Running Tests
 
 To run tests, run the following command
