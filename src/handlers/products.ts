@@ -10,10 +10,10 @@ const tokenSecret = TOKEN_SECRET as Secret;
 //get all products
 const getProduct = async (req: Request, res: Response): Promise<void> => {
   try {
-    const result = DBProducts.index();
-    res.json(result);
+    const result = await DBProducts.index();
+    res.send(result);
   } catch (err) {
-    res.json(err);
+    res.send(err);
   }
 };
 
@@ -21,10 +21,10 @@ const getProduct = async (req: Request, res: Response): Promise<void> => {
 const getProductById = async (req: Request, res: Response): Promise<void> => {
   try {
     const id = req.params.id;
-    const result = DBProducts.show(id);
-    res.json(result);
+    const result = await DBProducts.show(id);
+    res.send(result);
   } catch (err) {
-    res.json(err);
+    res.send(err);
   }
 };
 
@@ -36,7 +36,7 @@ const createProduct = async (req: Request, res: Response): Promise<void> => {
     jwt.verify(token, tokenSecret);
   } catch (err) {
     res.status(401);
-    res.json("Access denied, invalid token");
+    res.send("Access denied, invalid token");
     return;
   }
   try {
@@ -44,10 +44,10 @@ const createProduct = async (req: Request, res: Response): Promise<void> => {
       name: req.body.name as String,
       price: req.body.price as Number,
     };
-    const result = DBProducts.create(Products);
-    res.json(result);
+    const result = await DBProducts.create(Products);
+    res.send(result);
   } catch (err) {
-    res.json("error creating product");
+    res.send("error creating product");
     return;
   }
 };

@@ -4,11 +4,13 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
-  "start": "nodemon src/server.ts",
-  "jasmine": "jasmine",
-  "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
-  "test": "export ENV=test || set ENV=test&& db-migrate --env test up && jasmine-ts && db-migrate db:drop test",
-  "tsc": "tsc"
+    "start": "nodemon src/server.ts",
+    "jasmine": "jasmine",
+    "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
+    "test": "npm run testdb-down && export NODE_ENV=test|| set NODE_ENV=test&& npm run testdb-up && jasmine-ts src/models/tests/*_test.ts && npm run testdb-down",
+    "testdb-down": "db-migrate reset --config ./database.json --e test",
+    "testdb-up": "db-migrate --config ./database.json --e test up",
+    "tsc": "tsc"
   },
   "author": "Udacity",
   "license": "ISC",
@@ -29,12 +31,12 @@
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
     "@types/express": "^4.17.15",
-    "@types/jasmine": "^4.3.1",
+    "@types/jasmine": "^3.9.1",
     "@types/jsonwebtoken": "^9.0.0",
     "@types/pg": "^7.14.7",
-    "jasmine": "^4.5.0",
+    "jasmine": "^3.6.4",
     "jasmine-spec-reporter": "^6.0.0",
-    "jasmine-ts": "^0.3.0",
+    "jasmine-ts": "^0.4.0",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
     "tsc-watch": "^4.2.9"

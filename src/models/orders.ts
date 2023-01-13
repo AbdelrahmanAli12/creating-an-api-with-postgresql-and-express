@@ -2,7 +2,7 @@ import Client from "../database";
 
 export type orders = {
   order_id?: Number;
-  user_id: Number;
+  userId: Number;
   status?: Boolean;
 };
 export type orderProducts = {
@@ -13,11 +13,11 @@ export type orderProducts = {
 };
 
 export class dbUserOrderProducts {
-  async create(o: orders): Promise<orders> {
+  async create(id: String): Promise<orders> {
     try {
       const conn = await Client.connect();
-      const sql = "INSERT INTO orders(user_id) Values($1) RETURNING *";
-      const result = await conn.query(sql, [o.user_id]);
+      const sql = "INSERT INTO orders(userId) Values($1) RETURNING *";
+      const result = await conn.query(sql, [id]);
       const order = result.rows[0];
       conn.release();
       return order;
@@ -44,7 +44,7 @@ export class dbUserOrderProducts {
   }
   async show(id: string): Promise<orders> {
     try {
-      const sql = "SELECT * FROM orders WHERE user_id=($1)";
+      const sql = "SELECT * FROM orders WHERE userId=($1)";
       // @ts-ignore
       const conn = await Client.connect();
 

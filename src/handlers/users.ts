@@ -74,7 +74,7 @@ const getUsersById = async (req: Request, res: Response) => {
   }
   try {
     const userId = req.params.userId;
-    const result = DBusers.show(userId);
+    const result = await DBusers.show(userId);
     res.json(result);
   } catch (err) {
     res.json(err);

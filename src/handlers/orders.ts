@@ -38,13 +38,11 @@ const createOrder = async (req: Request, res: Response) => {
     return;
   }
   try {
-    const order: orders = {
-      user_id: req.body.user_id,
-    };
-    const result = await DBuserOrderProducts.create(order);
+    const userId = req.body.userId;
+    const result = await DBuserOrderProducts.create(userId);
     res.json(result);
   } catch (err) {
-    res.json("cannot create order");
+    res.json("cannot create order" + err);
   }
 };
 

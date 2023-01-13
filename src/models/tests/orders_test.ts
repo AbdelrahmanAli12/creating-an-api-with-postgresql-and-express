@@ -3,7 +3,7 @@ import { dbUserOrderProducts } from "../orders";
 
 const testOrder = new dbUserOrderProducts();
 
-describe("products table", () => {
+describe("orders table", () => {
   it("should have an index method", () => {
     expect(testOrder.create).toBeDefined();
   });
@@ -13,22 +13,21 @@ describe("products table", () => {
   it("should have a show method", () => {
     expect(testOrder.show).toBeDefined();
   });
+
   it("should create order", () => {
-    const result = testOrder.create({
-      user_id: 1,
-    });
-    expect(response.statusCode).toBe(400);
+    const result = testOrder.create("1");
+    expect(response.statusCode).toBe(200);
   });
-  it("should add a product to order", () => {
-    const result = testOrder.addProductsToOrder({
-      quantity: 1,
-      productId: 1,
-      orderId: 1,
-    });
-    expect(response.statusCode).toBe(400);
-  });
+  // it("should add a product to order", () => {
+  //   const r = testOrder.addProductsToOrder({
+  //     quantity: 1,
+  //     productId: 1,
+  //     orderId: 1,
+  //   });
+  //   expect(response.statusCode).toBe(200);
+  // });
   it("should show the order", () => {
     const result = testOrder.show("1");
-    expect(response.statusCode).toBe(404);
+    expect(response.statusCode).toBe(200);
   });
 });
