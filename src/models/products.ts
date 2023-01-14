@@ -43,7 +43,7 @@ export class dbProducts {
     try {
       const sql =
         "INSERT INTO products (name, price) VALUES($1,$2) RETURNING *";
-      // @ts-ignore
+
       const conn = await Client.connect();
 
       const result = await conn.query(sql, [b.name, b.price]);

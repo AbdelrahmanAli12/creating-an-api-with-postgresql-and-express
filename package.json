@@ -7,7 +7,7 @@
     "start": "nodemon src/server.ts",
     "jasmine": "jasmine",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
-    "test": "npm run testdb-down && export NODE_ENV=test|| set NODE_ENV=test&& npm run testdb-up && jasmine-ts src/models/tests/*_test.ts && npm run testdb-down",
+    "test": "npm run testdb-down && export NODE_ENV=test|| set NODE_ENV=test&& npm run testdb-up && jasmine-ts src/models/tests/test.ts && npm run testdb-down",
     "testdb-down": "db-migrate reset --config ./database.json --e test",
     "testdb-up": "db-migrate --config ./database.json --e test up",
     "tsc": "tsc"

@@ -1,6 +1,6 @@
 {
     "defaultEnv": {
-        "ENV": "NODE_ENV"
+        "ENV": "ENV"
     },
     "dev": {
         "driver": "pg",
