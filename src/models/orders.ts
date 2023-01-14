@@ -57,4 +57,18 @@ export class dbUserOrderProducts {
       throw new Error(`Could not find order ${id}. Error: ${err}`);
     }
   }
+  async index(): Promise<orders[]> {
+    try {
+      const conn = await Client.connect();
+      const sql = "SELECT * FROM orders";
+
+      const result = await conn.query(sql);
+
+      conn.release();
+
+      return result.rows;
+    } catch (err) {
+      throw new Error(`Could not get orders. Error: ${err}`);
+    }
+  }
 }
