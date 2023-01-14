@@ -1,0 +1,271 @@
+<DOCTYPE html>
+    <Html>
+        <head>
+            <title>home page</title>
+        </head>
+        <body>
+        <h1 id="build-a-storefront-backend">Build a Storefront Backend</h1>
+<p>This project is about building a Storefront backend using express and postgres using validation and authentication </p>
+<h2 id="badges">Badges</h2>
+<p><img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&amp;logo=typescript&amp;logoColor=white" alt="typescript"></p>
+<p><img src="https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&amp;logo=node.js&amp;logoColor=white" alt="node"></p>
+<p><img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&amp;logo=postgresql&amp;logoColor=white" alt="PostgreSQL"></p>
+<h2 id="run-locally">Run Locally</h2>
+<p>Go to the project directory</p>
+<pre><code class="lang-bash">  <span class="hljs-built_in">cd</span> src
+</code></pre>
+<p>Install dependencies</p>
+<pre><code class="lang-bash">  npm <span class="hljs-keyword">install</span>
+</code></pre>
+<p>Start the server</p>
+<pre><code class="lang-bash">  npm <span class="hljs-keyword">run</span><span class="bash"> start</span>
+</code></pre>
+<h2 id="environment-variables">Environment Variables</h2>
+<p>To run this project, you will need to add the following environment variables to your .env file</p>
+<p>The localhost you are running on <code>POSTGRES_HOST=</code>
+The name of the DataBase at <code>POSTGRES_DB=</code>
+Postgres username at <code>POSTGRES_USER=</code>
+Postgres password at <code>POSTGRES_PASSWORD=</code></p>
+<h4 id="jwt-attributes-">JWT attributes:</h4>
+<p><code>BCRYPT_PASSWORD=</code>
+<code>SALT_ROUNDS=</code>
+<code>PEPPER=</code>
+<code>TOKEN_SECRET=</code></p>
+<h4 id="ports">ports</h4>
+<p>the database is running on port 5432
+the backend is running on port 8000</p>
+<h2 id="connecting-to-the-database">Connecting to the database</h2>
+<ul>
+<li>first you need to start postgres</li>
+<li>then as in the database.json file create two data bases in postgres with the names in the .json file 
+   Example:
+<img src="img\database.PNG" alt="database"></li>
+<li>after that you need to grant all privileges on database (databaseName)
+to $user 
+Example:
+<img src="img\grant.PNG" alt="grant"><pre><code class="lang-psql"><span class="hljs-attribute">postgres</span>=# CREATE DATABASE store;
+<span class="hljs-attribute">CREATE DATABASE
+postgres</span>=# CREATE DATABASE store_test;
+<span class="hljs-attribute">CREATE DATABASE
+postgres</span>=# GRANT ALL PRIVILEGES ON DATABASE store TO postgres;
+<span class="hljs-attribute">GRANT
+postgres</span>=# GRANT ALL PRIVILEGES ON DATABASE store_test TO postgres;
+<span class="hljs-attribute">GRANT</span>
+</code></pre>
+<h2 id="running-tests">Running Tests</h2>
+</li>
+</ul>
+<p>To run tests, run the following command</p>
+<pre><code class="lang-bash">  npm <span class="hljs-keyword">run</span><span class="bash"> <span class="hljs-built_in">test</span></span>
+</code></pre>
+<h2 id="api-reference">API Reference</h2>
+<h4 id="get-all-the-products">Get all the products</h4>
+<pre><code class="lang-http">  <span class="hljs-meta">GET</span> /products
+</code></pre>
+<h4 id="get-products-by-id">Get products by Id</h4>
+<pre><code class="lang-http">  GET <span class="hljs-regexp">/products/</span><span class="hljs-variable">${id}</span>
+</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Parameter</th>
+<th style="text-align:left">Type</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>id</code></td>
+<td style="text-align:left"><code>number</code></td>
+<td style="text-align:left"><strong>Required</strong>. Id of the product</td>
+</tr>
+</tbody>
+</table>
+<h4 id="to-create-a-product">To create a product</h4>
+<pre><code class="lang-http">  POST <span class="hljs-regexp">/products/</span>create
+</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">body</th>
+<th style="text-align:left">Type</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>name</code></td>
+<td style="text-align:left"><code>string</code></td>
+<td style="text-align:left"><strong>Required</strong>. name of the product</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>price</code></td>
+<td style="text-align:left"><code>string</code></td>
+<td style="text-align:left"><strong>Required</strong>. price of the product</td>
+</tr>
+</tbody>
+</table>
+<h4 id="get-all-the-users">Get all the users</h4>
+<pre><code class="lang-http">  <span class="hljs-meta">GET</span> /users
+</code></pre>
+<h4 id="get-users-by-id">Get users by Id</h4>
+<pre><code class="lang-http">  GET <span class="hljs-regexp">/users/</span><span class="hljs-variable">${userId}</span>
+</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Parameter</th>
+<th style="text-align:left">Type</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>userId</code></td>
+<td style="text-align:left"><code>number</code></td>
+<td style="text-align:left"><strong>Required</strong>. Id of the user</td>
+</tr>
+</tbody>
+</table>
+<h4 id="to-create-a-user">To create a user</h4>
+<pre><code class="lang-http">  POST <span class="hljs-regexp">/users/</span>create
+</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">body</th>
+<th style="text-align:left">Type</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>username</code></td>
+<td style="text-align:left"><code>string</code></td>
+<td style="text-align:left"><strong>Required</strong>. name of the user</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>firstname</code></td>
+<td style="text-align:left"><code>string</code></td>
+<td style="text-align:left"><strong>Required</strong>. firstname of the user</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>lastname</code></td>
+<td style="text-align:left"><code>string</code></td>
+<td style="text-align:left"><strong>Required</strong>. lastname of the user</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>password_digest</code></td>
+<td style="text-align:left"><code>string</code></td>
+<td style="text-align:left"><strong>Required</strong>. password for the user</td>
+</tr>
+</tbody>
+</table>
+<h4 id="to-authenticate-a-user">To authenticate a user</h4>
+<pre><code class="lang-http">  POST <span class="hljs-regexp">/users/</span>authenticate
+</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">body</th>
+<th style="text-align:left">Type</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>username</code></td>
+<td style="text-align:left"><code>string</code></td>
+<td style="text-align:left"><strong>Required</strong>. name of the user</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>firstname</code></td>
+<td style="text-align:left"><code>string</code></td>
+<td style="text-align:left"><strong>Required</strong>. firstname of the user</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>lastname</code></td>
+<td style="text-align:left"><code>string</code></td>
+<td style="text-align:left"><strong>Required</strong>. lastname of the user</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>password_digest</code></td>
+<td style="text-align:left"><code>string</code></td>
+<td style="text-align:left"><strong>Required</strong>. password for the user</td>
+</tr>
+</tbody>
+</table>
+<h4 id="get-order-by-id">Get order by Id</h4>
+<pre><code class="lang-http">  GET <span class="hljs-regexp">/orders/</span><span class="hljs-variable">${id}</span>
+</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Parameter</th>
+<th style="text-align:left">Type</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>id</code></td>
+<td style="text-align:left"><code>number</code></td>
+<td style="text-align:left"><strong>Required</strong>. Id of the order</td>
+</tr>
+</tbody>
+</table>
+<h4 id="get-all-orders">Get all orders</h4>
+<pre><code class="lang-http">  <span class="hljs-meta">GET</span> /orders
+</code></pre>
+<h4 id="to-create-an-order">To create an order</h4>
+<pre><code class="lang-http">  POST <span class="hljs-regexp">/orders/</span>createOrder
+</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">body</th>
+<th style="text-align:left">Type</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>user_id</code></td>
+<td style="text-align:left"><code>string</code></td>
+<td style="text-align:left"><strong>Required</strong>. the user id</td>
+</tr>
+</tbody>
+</table>
+<h4 id="to-add-products-to-order">To add products to order</h4>
+<pre><code class="lang-http">  POST <span class="hljs-regexp">/orders/</span>addProductsToOrder
+</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">body</th>
+<th style="text-align:left">Type</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>quantity</code></td>
+<td style="text-align:left"><code>number</code></td>
+<td style="text-align:left"><strong>Required</strong>. number needed from this product</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>productId</code></td>
+<td style="text-align:left"><code>string</code></td>
+<td style="text-align:left"><strong>Required</strong>. the product id</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>orderId</code></td>
+<td style="text-align:left"><code>string</code></td>
+<td style="text-align:left"><strong>Required</strong>. the order id</td>
+</tr>
+</tbody>
+</table>
+
+
+            </body>
+        </Html>

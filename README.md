@@ -114,12 +114,12 @@ To run tests, run the following command
 #### Get users by Id
 
 ```http
-  GET /users/${id}
+  GET /users/${userId}
 ```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `id`      | `number` | **Required**. Id of the user   |
+| `userId`      | `number` | **Required**. Id of the user   |
 
 #### To create a user
 
@@ -148,7 +148,7 @@ To run tests, run the following command
 | `password_digest` | `string` | **Required**. password for the user   |
 
 
-#### Get products by Id
+#### Get order by Id
 
 ```http
   GET /orders/${id}
@@ -157,6 +157,12 @@ To run tests, run the following command
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
 | `id`      | `number` | **Required**. Id of the order   |
+
+#### Get all orders
+
+```http
+  GET /orders
+```
 
 #### To create an order
 

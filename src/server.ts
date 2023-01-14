@@ -10,7 +10,7 @@ const address: string = "8000";
 app.use(bodyParser.json());
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Hello World!");
+  res.sendFile("index.html", { root: "./src" });
 });
 
 app.listen(8000, function () {

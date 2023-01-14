@@ -5,107 +5,61 @@ import { dbUserOrderProducts, orderProducts, orders } from "../orders";
 const testProduct = new dbProducts();
 const testOrder = new dbUserOrderProducts();
 const testUsers = new dbUsers();
-const product: Products = {
-  product_id: 1,
-  name: "testProduct",
-  price: 200,
-};
-const createdUser: Users = {
-  user_id: 1,
-  username: "abdo",
-  firstname: "abdo",
-  lastname: "abdo",
-  password_digest: "123",
-};
-const createOrder: orders = {
-  order_id: 1,
-  userId: Number(createdUser.user_id),
-};
-
-let tempuser: Users = {
-  user_id: new Number(),
-  username: new String(),
-  firstname: new String(),
-  lastname: new String(),
-  password_digest: new String(),
-};
-let tempOrder: orders = {
-  userId: Number(tempuser.user_id),
-  order_id: new Number(),
-  status: false,
-};
-let tempProduct: Products = {
-  product_id: new Number(),
-  name: new String(),
-  price: new Number(),
-};
-let createOrderProduct: orderProducts = {
-  quantity: 1,
-  productId: Number(tempProduct.product_id),
-  orderId: Number(tempOrder.order_id),
-};
-
 describe("usermodel", () => {
-  it("create method", async () => {
-    const result = await testUsers.create("abdo", "abdo", "abdo", "123");
-    expect(result.user_id).toEqual(createdUser.user_id);
-    expect(result.firstname).toEqual(createdUser.firstname);
-    expect(result.lastname).toEqual(createdUser.lastname);
-    tempuser.user_id = result.user_id;
-    tempuser.firstname = result.firstname;
-    tempuser.lastname = result.lastname;
-    tempuser.username = result.username;
-    tempuser.password_digest = result.password_digest;
-  });
-
-  it("auth the user", async () => {
-    const result = await testUsers.authenticate(
-      String(tempuser.username),
+  it("create user and authenticate him and show all users", async () => {
+    const result = await testUsers.create(
+      "testUsername",
+      "testFirstname",
+      "testLastname",
       "123"
     );
-    expect(result?.username).toEqual(undefined);
-  });
-  it("gets all users", async () => {
-    const result = await testUsers.index();
-    expect(result.length).toBeGreaterThanOrEqual(0);
+    expect(result.username).toEqual("testUsername");
+    expect(result.firstname).toEqual("testFirstname");
+    expect(result.lastname).toEqual("testLastname");
+    //
+    const result1 = await testUsers.authenticate("testUsername", "123");
+    console.log("res------------> " + JSON.stringify(result1));
+    expect(JSON.stringify(result1?.user_id)).toBeGreaterThanOrEqual(0);
+    //
+    const result2 = await testUsers.index();
+    expect(result2.length).toBeGreaterThanOrEqual(0);
   });
 });
 
 describe("products", () => {
-  it("should create a new product", async () => {
+  it("should create a new product and show product by id and get all products", async () => {
     const result = await testProduct.create({
       name: "testProduct",
       price: 200,
     });
-    expect(result.name).toEqual(product.name);
-    expect(result.price).toEqual(product.price);
-    tempProduct.product_id = result.product_id;
-    tempProduct.name = result.name;
-    tempProduct.price = result.price;
-  });
-  it("should return all the products", async () => {
-    const result = testProduct.index();
-    expect((await result).length).toBeGreaterThanOrEqual(0);
-  });
-  it("should return product by id", async () => {
-    const result = await testProduct.show(String(tempProduct.product_id));
-    // expect(result).toBe(0);
+    expect(result.name).toEqual("testProduct");
+    expect(result.price).toEqual(200);
+    //
+    const result1 = await testProduct.show("1");
+    console.log(JSON.stringify(result1));
+    expect(JSON.stringify(result1.product_id)).toBeGreaterThanOrEqual(0);
+    //
+    const result3 = testProduct.index();
+    expect((await result3).length).toBeGreaterThanOrEqual(0);
   });
 });
 
 describe("order", () => {
-  it("should create order", async () => {
-    const result = await testOrder.create(String(tempuser.user_id));
+  it("should create order and return all products", async () => {
+    const result = await testOrder.create("1");
     expect(result?.status).toEqual(false);
-    tempOrder.order_id = result.order_id;
-    tempOrder.userId = result.userId;
-  });
-  it("should add product to order", async () => {
-    await testOrder.addProductsToOrder(createOrderProduct);
-    expect(createOrderProduct.quantity).toEqual(1);
-  });
-  it("should show the orders", async () => {
-    const result = await testOrder.show(String(tempOrder.userId));
-    expect(result.status).toEqual(false);
+    //
+    const result1 = await testOrder.index();
+    expect(JSON.stringify(result1[0].status)).toEqual("false");
+    //
+    const result2 = await testOrder.show("1");
+    expect(result2.status).toEqual(false);
+    //
+    const result3 = await testOrder.addProductsToOrder({
+      quantity: 1,
+      productId: 1,
+      orderId: 1,
+    });
+    expect(result3.quantity).toEqual(1);
   });
 });
