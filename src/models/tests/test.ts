@@ -43,23 +43,24 @@ describe("products", () => {
     expect((await result3).length).toBeGreaterThanOrEqual(0);
   });
 });
-
 describe("order", () => {
   it("should create order and return all products", async () => {
     const result = await testOrder.create("1");
-    expect(result?.status).toEqual(false);
+    console.log("created order =>>>>>> " + JSON.stringify(result));
+    expect(JSON.stringify(result.status)).toEqual("false");
     //
     const result1 = await testOrder.index();
     expect(JSON.stringify(result1[0].status)).toEqual("false");
     //
     const result2 = await testOrder.show("1");
-    expect(result2.status).toEqual(false);
+    expect(JSON.stringify(result2.status)).toEqual("false");
     //
     const result3 = await testOrder.addProductsToOrder({
       quantity: 1,
       productId: 1,
       orderId: 1,
     });
-    expect(result3.quantity).toEqual(1);
+    console.log("resssssss333333" + JSON.stringify(result3));
+    expect(JSON.stringify(result3.quantity)).toEqual("1");
   });
 });
