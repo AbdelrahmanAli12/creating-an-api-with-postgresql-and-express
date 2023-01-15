@@ -23,6 +23,9 @@ describe("usermodel", () => {
     //
     const result2 = await testUsers.index();
     expect(result2.length).toBeGreaterThanOrEqual(0);
+    //
+    const result3 = await testUsers.show("1");
+    expect(JSON.stringify(result3?.user_id)).toBeGreaterThanOrEqual(1);
   });
 });
 
