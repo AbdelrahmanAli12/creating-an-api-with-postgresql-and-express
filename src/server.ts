@@ -20,3 +20,5 @@ app.listen(8000, function () {
 app.use("/products", productsRoute);
 app.use("/users", usersRoute);
 app.use("/orders", ordersRoute);
+
+export default app;

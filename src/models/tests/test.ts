@@ -1,11 +1,68 @@
-import { response, request } from "express";
+import { response } from "express";
 import { dbProducts, Products } from "../products";
 import { dbUsers, Users } from "../users";
 import { dbUserOrderProducts, orderProducts, orders } from "../orders";
+import supertest from "supertest";
+import app from "../../server";
+import exp from "constants";
+import { userInfo } from "os";
+const request = supertest(app);
 const testProduct = new dbProducts();
 const testOrder = new dbUserOrderProducts();
 const testUsers = new dbUsers();
-describe("usermodel", () => {
+let token: string | undefined = undefined;
+describe("api routes", () => {
+  //users route
+  beforeAll(async () => {
+    const user = {
+      firstName: "abdelrahman",
+      lastName: "ali",
+      username: "abdo",
+      password: "123",
+    };
+    const create = await request.post("/users/create").send(user);
+    expect(create.status).toBe(200);
+    const auth = await request
+      .post("/users/authenticate")
+      .send({ username: user.username, password: user.password });
+    token = auth.body;
+    console.log("auth -> " + token);
+    expect(auth.status).toBe(200);
+  });
+  it("Testing routes without Authoriztion", async () => {
+    const users = await request.get("/users");
+    const getUserById = await request.get("/users/1");
+    const orders = await request.get("/orders");
+    const products = await request.get("/products");
+    const createProduct = await request
+      .post("/products/create")
+      .send({ name: "test", price: 123 });
+    const createOrder = await request
+      .post("/orders/createOrder")
+      .send({ userId: "1" });
+    const getOrderById = await request.get("/orders/1");
+    const getAllOrders = await request.get("/orders");
+    const addProductsToOrder = await request
+      .post("/orders/addProductsToOrder")
+      .send({
+        quantity: 1,
+        productId: 1,
+        orderId: 1,
+      });
+    expect(users.status).toBe(401);
+    expect(orders.status).toBe(401);
+    expect(products.status).toBe(401);
+    expect(getUserById.status).toBe(401);
+    expect(createProduct.status).toBe(401);
+    expect(createOrder.status).toBe(401);
+    expect(getOrderById.status).toBe(401);
+    expect(getAllOrders.status).toBe(401);
+    expect(addProductsToOrder.status).toBe(401);
+  });
+  it("should find product by id", async () => {
+    const getProductById = await request.get("/products/1");
+    expect(getProductById.status).toBe(200);
+  });
   it("create user and authenticate him and show all users", async () => {
     const result = await testUsers.create(
       "testUsername",
@@ -27,9 +84,6 @@ describe("usermodel", () => {
     const result3 = await testUsers.show("1");
     expect(JSON.stringify(result3?.user_id)).toBeGreaterThanOrEqual(1);
   });
-});
-
-describe("products", () => {
   it("should create a new product and show product by id and get all products", async () => {
     const result = await testProduct.create({
       name: "testProduct",
@@ -45,8 +99,6 @@ describe("products", () => {
     const result3 = testProduct.index();
     expect((await result3).length).toBeGreaterThanOrEqual(0);
   });
-});
-describe("order", () => {
   it("should create order and return all products", async () => {
     const result = await testOrder.create("1");
     console.log("created order =>>>>>> " + JSON.stringify(result));
@@ -67,3 +119,15 @@ describe("order", () => {
     expect(JSON.stringify(result3.quantity)).toEqual("1");
   });
 });
+
+//////////////////////////////////////////////////
+// describe("usermodel", () => {
+
+// });
+
+// describe("products", () => {
+//
+// });
+// describe("order", () => {
+//
+// });

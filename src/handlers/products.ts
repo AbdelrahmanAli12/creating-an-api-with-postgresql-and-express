@@ -10,6 +10,15 @@ const tokenSecret = TOKEN_SECRET as Secret;
 //get all products
 const getProduct = async (req: Request, res: Response): Promise<void> => {
   try {
+    const authorizationHeader = req.headers.authorization as String;
+    const token = authorizationHeader.split(" ")[1];
+    jwt.verify(token, tokenSecret);
+  } catch (err) {
+    res.status(401);
+    res.send("Access denied, invalid token");
+    return;
+  }
+  try {
     const result = await DBProducts.index();
     res.send(result);
   } catch (err) {
