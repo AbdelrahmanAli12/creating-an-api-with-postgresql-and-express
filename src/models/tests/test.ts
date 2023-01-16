@@ -22,14 +22,60 @@ describe("api routes", () => {
     };
     const create = await request.post("/users/create").send(user);
     expect(create.status).toBe(200);
+
     const auth = await request
       .post("/users/authenticate")
       .send({ username: user.username, password: user.password });
+    console.log("auth -> " + auth.body);
     token = auth.body;
-    console.log("auth -> " + token);
+    console.log("token --> " + token);
     expect(auth.status).toBe(200);
   });
+  it("Testing routes with Authoriztion", async () => {
+    var headers = { authorizationHeader: token };
+    const users = await request
+      .get("/users")
+      .set("Authorization", "bearer " + token);
+    const getUserById = await request
+      .get("/users/1")
+      .set("Authorization", "bearer " + token);
+    const orders = await request
+      .get("/orders")
+      .set("Authorization", "bearer " + token);
+    const products = await request
+      .get("/products")
+      .set("Authorization", "bearer " + token);
+    const createProduct = await request
+      .post("/products/create")
+      .send({ name: "test", price: 123 })
+      .set("Authorization", "bearer " + token);
+    const createOrder = await request
+      .post("/orders/createOrder")
+      .send({ userId: "1" })
+      .set("Authorization", "bearer " + token);
+    const getOrderById = await request
+      .get("/orders/1")
+      .set("Authorization", "bearer " + token);
+    const addProductsToOrder = await request
+      .post("/orders/addProductsToOrder")
+      .send({
+        quantity: 1,
+        productId: 1,
+        orderId: 1,
+      })
+      .set("Authorization", "bearer " + token);
+    expect(users.status).toBe(200);
+    expect(orders.status).toBe(200);
+    expect(products.status).toBe(200);
+    expect(getUserById.status).toBe(200);
+    expect(createProduct.status).toBe(200);
+    expect(createOrder.status).toBe(200);
+    expect(getOrderById.status).toBe(200);
+    expect(addProductsToOrder.status).toBe(200);
+  });
+
   it("Testing routes without Authoriztion", async () => {
+    var headers = { authorizationHeader: token };
     const users = await request.get("/users");
     const getUserById = await request.get("/users/1");
     const orders = await request.get("/orders");
