@@ -14,7 +14,7 @@ const getProduct = async (req: Request, res: Response): Promise<void> => {
     const token = authorizationHeader.split(" ")[1];
     jwt.verify(token, tokenSecret);
   } catch (err) {
-    res.status(401);
+    res.status(403);
     res.send("Access denied, invalid token");
     return;
   }
@@ -39,12 +39,13 @@ const getProductById = async (req: Request, res: Response): Promise<void> => {
 
 //create product
 const createProduct = async (req: Request, res: Response): Promise<void> => {
+ 
   try {
     const authorizationHeader = req.headers.authorization as String;
     const token = authorizationHeader.split(" ")[1];
     jwt.verify(token, tokenSecret);
   } catch (err) {
-    res.status(401);
+    res.status(403);
     res.send("Access denied, invalid token");
     return;
   }
