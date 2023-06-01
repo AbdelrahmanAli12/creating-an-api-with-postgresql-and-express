@@ -4,11 +4,9 @@
     },
     "dev": {
         "driver": "pg",
-
         "host": {
             "ENV": "POSTGRES_HOST"
         },
-        
         "port": {
             "ENV": "POSTGRES_PORT"
         },
